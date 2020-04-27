@@ -41,7 +41,7 @@ export default class Calculator extends Component {
         if(this.state.currentValueIndex === 0){
             this.setState({operation, currentValueIndex: 1, clearDisplay: true})
         }
-        else {
+        else if(this.state.values[1] !== undefined){
             const equals = operation === '='
             var divisionByZero = false
             const currentOperation = this.state.operation
@@ -76,6 +76,8 @@ export default class Calculator extends Component {
                     break
                 default:
             }
+            
+            values[0] = values[0] % 1 !== 0 ? values[0].toFixed(3) : values[0];
 
             if(!divisionByZero){
                 this.setState({
@@ -97,7 +99,7 @@ export default class Calculator extends Component {
             return
         }
         
-        const clearDisplay = this.state.displayValue === '0' ||
+        const clearDisplay = (this.state.displayValue === '0' && n !== '.') ||
             this.state.displayValue === "ERROR" || this.state.clearDisplay
         
         const currentValue = clearDisplay ? '' : this.state.displayValue
